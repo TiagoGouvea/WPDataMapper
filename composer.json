@@ -1,0 +1,24 @@
+{
+    "name": "tiagogouvea/wpdatamapper",
+    "type": "library",
+    "description": "Wordpress DataMapper classes to better work with data objects",
+    "keywords": ["php","wordpress","datamapper"],
+    "homepage": "https://github.com/tiagogouvea/wpdatamapper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tiago Gouvêa",
+            "email": "tiago@tiagogouvea.com.br",
+            "homepage": "http://www.tiagogouvea.com.br/"
+        }
+    ],
+    "require": {
+        "php": ">=5.0.0"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/tiagogouvea/wpdatamapper"
+        }
+    ]
+}
