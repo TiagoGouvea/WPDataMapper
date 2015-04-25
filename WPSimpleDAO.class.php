@@ -2,9 +2,7 @@
 
 namespace TiagoGouvea\WPDataMapper;
 
-use TiagoGouvea\PLib;
 use wpdb;
-
 
 class WPSimpleDAO
 {
@@ -28,6 +26,7 @@ class WPSimpleDAO
 
     function getById($id,$getMeta=false)
     {
+        /* @var $wpdb wpdb */
         global $wpdb;
         $record = $wpdb->get_row('SELECT * FROM ' . $this->tableName . ' WHERE ID = ' . (int)$id, ARRAY_A);
         $record = stripslashes_deep($record);
@@ -37,14 +36,15 @@ class WPSimpleDAO
 
     function getBy($by,$value,$single=true)
     {
+        /* @var $wpdb wpdb */
         global $wpdb;
         $sql = 'SELECT * FROM ' . $this->tableName . ' WHERE '.$by.' = \''.$value.'\'';
-//        PLib::var_dump($sql,"getBy");
-//        PLib::var_dump($single,"Single");
+//        var_dump($sql,"getBy");
+//        var_dump($single,"Single");
         if ($single){
             $result = $wpdb->get_row($sql , ARRAY_A);
             $result = stripslashes_deep($result);
-//            \PLib::var_dump($result,"get_row");
+//            \var_dump($result,"get_row");
             if ($result){
                 $record = $this->populate($result);
                 return $record;
@@ -52,7 +52,7 @@ class WPSimpleDAO
         } else {
             $results = $wpdb->get_results($sql , ARRAY_A);
             $results = stripslashes_deep($results);
-//            PLib::var_dump(count($results),"count(result)");
+//            var_dump(count($results),"count(result)");
             if (count($results)>0){
                 $records = $this->toObject($results);
                 return $records;
@@ -75,6 +75,7 @@ class WPSimpleDAO
 
     function getAll()
     {
+        /* @var $wpdb wpdb */
         global $wpdb;
         $result = $wpdb->get_results('SELECT * FROM ' . $this->tableName . (isset($this->fixedWhere)? ' where '.$this->fixedWhere : ''). ' order by ' . $this->fieldOrder, ARRAY_A);
         $records = $this->toObject($result);
@@ -101,7 +102,7 @@ class WPSimpleDAO
             unset($values['id']);
 //        $mascaras = array_fill(0, count($values) + 1, 'NULL');
 
-//        PLib::var_dump($values,"Valores de save em ".$this->tableName);
+//        var_dump($values,"Valores de save em ".$this->tableName);
         /** @var $wpdb wpdb */
         global $wpdb;
         add_filter( 'query', 'wp_db_null_value' );
@@ -112,6 +113,7 @@ class WPSimpleDAO
 
     function delete($id)
     {
+        /* @var $wpdb wpdb */
         global $wpdb;
         $ok = $wpdb->delete($this->tableName, array('id' => $id));
         return $ok;
@@ -187,12 +189,12 @@ class WPSimpleDAO
         }
 
 
-//        \Plib::var_dump($arguments,"arguments");
+//        \var_dump($arguments,"arguments");
         if ($arguments[1]===null)
             $single=true;
         else
             $single = $arguments[1]==true;
-//        \Plib::var_dump($single,"Single");
+//        \var_dump($single,"Single");
 
         if (in_array($field,$this->dataFields) || in_array(strtolower($field),$this->dataFields))
             return $this->$method($field,$arguments[0],$single);

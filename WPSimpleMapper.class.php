@@ -1,9 +1,4 @@
 <?php
-/**
- * User: TiagoGouvea
- * Date: 21/03/15
- * Time: 10:57
- */
 
 namespace TiagoGouvea\WPDataMapper;
 
